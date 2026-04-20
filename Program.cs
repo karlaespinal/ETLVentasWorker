@@ -13,6 +13,7 @@ builder.Services.AddSingleton<IExtractor, DatabaseExtractor>();
 builder.Services.AddSingleton<StagingWriter>();
 builder.Services.AddSingleton<WarehouseInitializer>();
 builder.Services.AddSingleton<DimensionLoader>();
+builder.Services.AddSingleton<FactLoader>();
 
 builder.Services.AddHostedService<Worker>();
 

@@ -11,19 +11,22 @@ public class Worker : BackgroundService
     private readonly StagingWriter _stagingWriter;
     private readonly WarehouseInitializer _warehouseInitializer;
     private readonly DimensionLoader _dimensionLoader;
+    private readonly FactLoader _factLoader;
 
     public Worker(
         ILogger<Worker> logger,
         IEnumerable<IExtractor> extractors,
         StagingWriter stagingWriter,
         WarehouseInitializer warehouseInitializer,
-        DimensionLoader dimensionLoader)
+        DimensionLoader dimensionLoader,
+        FactLoader factLoader)
     {
         _logger = logger;
         _extractors = extractors;
         _stagingWriter = stagingWriter;
         _warehouseInitializer = warehouseInitializer;
         _dimensionLoader = dimensionLoader;
+        _factLoader = factLoader;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -38,7 +41,8 @@ public class Worker : BackgroundService
 
         await _warehouseInitializer.InitializeAsync(stoppingToken);
         await _dimensionLoader.LoadDimensionsAsync(stoppingToken);
+        await _factLoader.LoadFactsAsync(stoppingToken);
 
-        _logger.LogInformation("Proceso ETL y carga de dimensiones finalizado.");
+        _logger.LogInformation("Proceso ETL, carga de dimensiones y FACTS finalizado.");
     }
 }

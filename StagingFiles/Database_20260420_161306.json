@@ -1,0 +1,12 @@
+[
+  {
+    "Id": 201,
+    "Descripcion": "Dato BD 1",
+    "Tipo": "Database"
+  },
+  {
+    "Id": 202,
+    "Descripcion": "Dato BD 2",
+    "Tipo": "Database"
+  }
+]

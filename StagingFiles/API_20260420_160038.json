@@ -1,0 +1,12 @@
+[
+  {
+    "Id": 101,
+    "Comentario": "Dato desde API",
+    "Tipo": "API"
+  },
+  {
+    "Id": 102,
+    "Comentario": "Otro dato API",
+    "Tipo": "API"
+  }
+]

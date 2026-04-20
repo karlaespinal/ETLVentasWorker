@@ -46,14 +46,27 @@ public class WarehouseInitializer
             FOREIGN KEY (FechaId) REFERENCES DimFecha(FechaId)
         );";
 
-        foreach (var sql in new[] { createDimFuenteDatos, createDimFecha, createDimRegistro })
+        
+        var createFactVentas = @"
+        CREATE TABLE IF NOT EXISTS FactVentas (
+            FactId INTEGER PRIMARY KEY AUTOINCREMENT,
+            FuenteId INTEGER NOT NULL,
+            FechaId INTEGER NOT NULL,
+            Cantidad INTEGER NOT NULL,
+            Total REAL NOT NULL,
+            FOREIGN KEY (FuenteId) REFERENCES DimFuenteDatos(FuenteId),
+            FOREIGN KEY (FechaId) REFERENCES DimFecha(FechaId)
+        );";
+
+        
+        foreach (var sql in new[] { createDimFuenteDatos, createDimFecha, createDimRegistro, createFactVentas })
         {
             await using var command = connection.CreateCommand();
             command.CommandText = sql;
             await command.ExecuteNonQueryAsync(cancellationToken);
         }
 
-        _logger.LogInformation("Base de datos DataWarehouse.db y tablas dimensión creadas correctamente.");
+        _logger.LogInformation("Base de datos DataWarehouse.db, dimensiones y FACT creadas correctamente.");
     }
 
     public string GetConnectionString()
